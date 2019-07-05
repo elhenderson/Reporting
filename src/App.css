@@ -1,0 +1,16 @@
+
+
+.Collapsible {
+  background: blue;
+  width: 50%;
+  text-align: center;
+  margin: auto;
+}
+
+.Collapsible__contentInner {
+  background: red;
+}
+
+.Collapsible__trigger {
+  cursor: pointer;
+}
