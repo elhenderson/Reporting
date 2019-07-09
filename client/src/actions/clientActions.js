@@ -4,12 +4,12 @@ import {POST_CLIENT_DATA, GET_CLIENT_DATA} from './actionTypes';
 export const getClientData = () => dispatch => {
   axios
   .get('/api')
-  .then(res => 
-
+  .then(res =>
+    // console.log(res.data[0].ordersArray[0].storeName)
     dispatch({
       type: GET_CLIENT_DATA,
-      payload: res.data
-    })
+      payload: res.data[0].ordersArray[0].storeName
+    }) 
   )
 }
 

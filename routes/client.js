@@ -5,10 +5,9 @@ const Client = require('../models/Client');
 const Transform = require("./transformCopy");
 const fs = require("fs");
 
-
 router.get('/', (req, res) => {
   Client.find()
-  .then((result) => (res.json(result)))
+  .then((result) => res.json(result))
   .catch(err => console.log(err))
 })
 
@@ -25,16 +24,24 @@ router.post('/', (req, res) => {
   async function countOrders() {
     for (let i = 0; i < ordersArray.length; i++) {
       if (ordersArray[i].channelOrderID) {
+        //flaw in logic here
         if (!orders.includes(ordersArray[i].channelOrderID)) {
-          orders.push(ordersArray[i].channelOrderID)
+          if (ordersArray[i].storeName === "Revital U") {
+            orders.push(ordersArray[i])
+          }
         }
       }
     }
     console.log(orders.length);
+    // console.log(orders)
 
+    //new server instance would be more accurate?
     const newClient = await new Client({
-      totalCount: orders.length
+      totalCount: orders.length,
+      ordersArray: orders
     })
+    
+    await console.log(newClient.totalCount);
   
     await newClient.save()
     .then((result) => res.json(result)); 

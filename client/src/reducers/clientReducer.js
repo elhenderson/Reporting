@@ -1,7 +1,7 @@
 import {POST_CLIENT_DATA, GET_CLIENT_DATA} from '../actions/actionTypes';
 
 const initialState = {
-  clients: []
+  clientData: []
 }
 
 export default function(state = initialState, action) {
@@ -9,12 +9,12 @@ export default function(state = initialState, action) {
     case GET_CLIENT_DATA:
       return {
         ...state,
-        clients: action.payload
+        clientData: action.payload
       };
     case POST_CLIENT_DATA:
       return {
         ...state,
-        clients: [action.payload, ...state.clients]
+        clientData: [action.payload, ...state.clients]
       }
     default:
       return state;

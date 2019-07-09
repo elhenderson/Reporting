@@ -7,40 +7,22 @@ import Collapsible from 'react-collapsible';
 
 class CountOrders extends Component {
 
+
   componentDidMount() {
     this.props.getClientData()
   }
 
-  // componentDidUpdate() {
-  //   this.updateClientCount(this.props.clients)
-  // }
-
-  getClientDataMethod() {
-    this.props.getClientData()
-  }
-
-  updateClientCount(count) {
-    this.props.getClientData()
-
-    const newArray = Object.keys(count)
-    .map(countKey => {
-      return count[countKey]
-    })
-    console.log(newArray)
-    return newArray
-    
-  }
-
 
   render() {
+    // console.log(this.props.totalCount)
 
-    // console.log(this.props.clients)
-    // const fuckThis = this.props.clients
+    console.log(this.props.storeName)
+
     
     return (
       <div>
         <Collapsible trigger="SKU2USHIPWORKS">
-          <p>Total: </p>
+          <p>Total: {this.props.storeName}</p>
           <p>FedEx: 5</p>
           <p>USPS: 11</p>
           <p>UPS: 0</p>
@@ -56,7 +38,7 @@ CountOrders.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  clients: state.data.clients[4]
+  storeName: state.data.clientData
 })
 
 const mapDispatchToProps = dispatch => {
