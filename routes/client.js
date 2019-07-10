@@ -19,6 +19,8 @@ router.post('/', (req, res) => {
 
   const ordersArray = JSONvar.orderList.orders
 
+  const clients = ["Zilis", "Revital U"]
+
   let orders = []
 
   async function countOrders() {
