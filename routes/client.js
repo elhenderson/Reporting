@@ -22,16 +22,36 @@ router.post('/', (req, res) => {
   let orders = [];
 
   async function countOrders() {
-    for (let i = 0; i < ordersArray.length; i++) {
-      if (ordersArray[i].channelOrderID) {
-        //flaw in logic here
-        if (!orders.includes(ordersArray[i].channelOrderID)) {
-          if (ordersArray[i].storeName === "Revital U") {
-            orders.push(ordersArray[i])
-          }
-        }
+    // for (let i = 0; i < ordersArray.length; i++) {
+    //   if (ordersArray[i].channelOrderID) {
+    //     //flaw in logic here
+    //     if (!orders.includes(ordersArray[i].channelOrderID)) {
+    //       if (ordersArray[i].storeName === "Revital U") {
+    //         orders.push(ordersArray[i])
+    //       }
+    //     }
+    //   }
+    // }
+
+    const entries = Object.entries(ordersArray)
+    // orders.push(entries);
+  
+
+    const newOrders = entries.map(order => {
+      if (order[0].storeName === "Zilis") {
+        return order
       }
-    }
+    })
+
+    orders.push(newOrders)
+
+    console.log(entries);
+
+    // .map(modified => {
+    //   const isZilis = modified.filter(order => order.includes("Zilis"))
+    //   orders.push(isZilis)
+    // })
+
     console.log(orders.length);
     // console.log(orders)
 
