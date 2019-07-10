@@ -8,15 +8,11 @@ const ClientSchema = new Schema({
     required: false
   },
   ordersArray: {
-    type: Array,
+    type: Array
   },
   date: {
     type: Date,
     date: Date.now()
-  },
-  totalCount: {
-    type: Number,
-    required: true
   }
 })
 

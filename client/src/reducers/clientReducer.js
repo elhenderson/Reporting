@@ -1,7 +1,7 @@
 import {POST_CLIENT_DATA, GET_CLIENT_DATA} from '../actions/actionTypes';
 
 const initialState = {
-  clientData: []
+  clientData: 0
 }
 
 export default function(state = initialState, action) {

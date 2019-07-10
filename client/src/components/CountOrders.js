@@ -16,13 +16,13 @@ class CountOrders extends Component {
   render() {
     // console.log(this.props.totalCount)
 
-    console.log(this.props.storeName)
+    // console.log(this.props.storeName)
 
     
     return (
       <div>
-        <Collapsible trigger="SKU2USHIPWORKS">
-          <p>Total: {this.props.storeName}</p>
+        <Collapsible trigger="Revital U">
+          <p>Total: {this.props.totalCount}</p>
           <p>FedEx: 5</p>
           <p>USPS: 11</p>
           <p>UPS: 0</p>
@@ -38,7 +38,7 @@ CountOrders.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  storeName: state.data.clientData
+  totalCount: state.data.clientData
 })
 
 const mapDispatchToProps = dispatch => {
