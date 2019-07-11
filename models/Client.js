@@ -3,12 +3,14 @@ const Schema = mongoose.Schema;
 
 //grouped by server instead of client
 const ClientSchema = new Schema({
-  storeName: {
-    type: String,
-    required: false
-  },
   ordersObject: {
     type: Object
+  },
+  ordersCountObject: {
+    type: Object
+  },
+  listOfClients: {
+    type: Array
   },
   date: {
     type: Date,

@@ -5,7 +5,7 @@ export const getClientData = () => dispatch => {
   axios
   .get('/api')
   .then(res =>
-    // console.log(res.data[0].ordersArray[0].length)
+    // console.log(res.data[0])
     dispatch({
       type: GET_CLIENT_DATA,
       payload: res.data[0]

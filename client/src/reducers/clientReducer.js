@@ -1,7 +1,9 @@
 import {POST_CLIENT_DATA, GET_CLIENT_DATA} from '../actions/actionTypes';
 
 const initialState = {
-  clientData: 0
+  revitalUData: [],
+  zilisData: [],
+  listOfClients: []
 }
 
 export default function(state = initialState, action) {
@@ -9,7 +11,9 @@ export default function(state = initialState, action) {
     case GET_CLIENT_DATA:
       return {
         ...state,
-        clientData: action.payload
+        revitalUData: action.payload.ordersCountObject["Revital U"],
+        zilisData: action.payload.ordersCountObject["Zilis"],
+        listOfClients: action.payload.listOfClients
       };
     case POST_CLIENT_DATA:
       return {

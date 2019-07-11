@@ -19,9 +19,29 @@ router.post('/', (req, res) => {
 
   const ordersArray = JSONvar.orderList.orders
 
-  const clients = {
+  const listOfClients = [
+    "Revital U",
+    "Zilis"
+  ]
+
+  const clientOrders = {
     "Revital U": [],
     "Zilis": []
+  }
+
+  const clientOrdersCount = {
+    "Revital U": {
+      "Total": 0,
+      "FedEx": 0,
+      "USPS": 0,
+      "UPS": 0
+    },
+    "Zilis": {
+      "Total": 0,
+      "FedEx": 0,
+      "USPS": 0,
+      "UPS": 0
+    }
   }
 
 
@@ -30,45 +50,21 @@ router.post('/', (req, res) => {
     //allows use of array methods
     const entries = await Object.entries(ordersArray)
 
-
-
-    // test = () => {
-    //   for (var key in clients) {
-    //     console.log(clients[key])
-    //   }
-    // }
-
-    // test();
-
-
-    // console.log(test);
     sortByStoreName = () => {
       for (i=0; i<entries.length; i++) {
         const storeNameVar = entries[i][1].storeName
-        // console.log(clients[storeNameVar]);
         if (entries[i][1].storeName === storeNameVar) {
-          clients[storeNameVar].push(entries[i][1])
+          clientOrders[storeNameVar].push(entries[i][1])
         }
       }
-      // console.log(clients["Zilis"])
     }
 
     await sortByStoreName();
 
-    // test = () => {
-    //   for (var key in clients) {
-    //     console.log(clients[key])
-    //   }
-    // }
-
-    // test();
-
     removedDuplicates = () => {
-      for (var key in clients) {
-        clients[key] =
-          clients[key]
-          .reduce((accumulator, order, index, array) => {
-            console.log(order)
+      for (var key in clientOrders) {
+        clientOrders[key] =
+          clientOrders[key].reduce((accumulator, order, index, array) => {
             const { list, hashList } = accumulator;
             const hash = JSON.stringify(order).replace(/\s/g, '');
           
@@ -88,58 +84,37 @@ router.post('/', (req, res) => {
 
     await removedDuplicates();
 
-    await console.log(clients["Zilis"].length)
+    countProviders = () => {
+      for (var key in clientOrders) {
+        clientOrders[key].map((order) => {
+          switch(order.provider) {
+            case "FedEx":
+              clientOrdersCount[key]["FedEx"]++
+              clientOrdersCount[key]["Total"]++
+              break;
+            case "USPS":
+              clientOrdersCount[key]["USPS"]++
+              clientOrdersCount[key]["Total"]++
+              break;
+            case "UPS":
+              clientOrdersCount[key]["UPS"]++
+              clientOrdersCount[key]["Total"]++
+              break;
+          }
+        })
+      }
+    }
+
+    countProviders();
 
 
-    // const filteredByStoreName = await entries
-    // .map(order => {
-    //   // console.log(order[1].storeName)
-    //   const storeNameVar = order[1].storeName
-    //   console.log(clients[storeNameVar])
-    //   if (order[1].storeName === clients[storeNameVar]) {
-    //     console.log("wow")
-    //     return order
-    //   }
-    // })
-
-    //stores all Revital U orders in a variable
-    // const filteredByStoreName = await entries
-    // .filter((order, index) => {
-    //   if (order[1].storeName === "Revital U") {
-    //     return order[1]
-        
-    //   }
-    // })
-
-
-
-    //removes duplicates
-    // const removedDuplicates = await filteredByStoreName
-    // .reduce((accumulator, order, index, array) => {
-    //   console.log(order)
-    //   const { list, hashList } = accumulator;
-    //   const hash = JSON.stringify(order[1]).replace(/\s/g, '');
-    
-    //   if (hash && !hashList.includes(hash)) {
-    //     hashList.push(hash);
-    //     list.push(order[1]);
-    //   }
-    
-    //   if (index + 1 !== array.length) {
-    //     return accumulator;
-    //   }  else {
-    //     return accumulator.list;
-    //   }
-    // }, { list: [], hashList: [] });
-
-
-    // //pushes all Revital U orders to the array
-    // await orders.push(removedDuplicates);
     
 
     //new server instance would be more accurate?
     const newClient = await new Client({
-      ordersObject: clients
+      ordersObject: clientOrders,
+      ordersCountObject: clientOrdersCount,
+      listOfClients
     })
     
   
