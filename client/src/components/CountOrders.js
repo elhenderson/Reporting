@@ -12,6 +12,7 @@ class CountOrders extends Component {
     this.props.getClientData()
   }
 
+  
 
   render() {
     // console.log(this.props.totalCount)
@@ -19,31 +20,22 @@ class CountOrders extends Component {
     // console.log(this.props.revitalUCount)
     console.log(this.props.clientsList)
 
-    // const clients = clientsList.map((client, index) => (
-    //   <Collapsible trigger={this.props.clientsList[index]}>
-    //     <p>Total: {this.props.clientsList[index]["Total"]}</p>
-    //     <p>FedEx: {this.props.clientsList[index]["FedEx"]}</p>
-    //     <p>USPS: {this.props.clientsList[index]["USPS"]}</p>
-    //     <p>UPS: {this.props.clientsList[index]["UPS"]}</p>
-    //   </Collapsible>
-    // ))
-    
+    const clients = this.props.clientsList.map((client, index) => (
+      
+      <Collapsible trigger={this.props.clientsList[index]} key={client}>
+        {/* {console.log(this.props[`${client}`]["Total"])} */}
+        <p>Total: {this.props[`${client}`]["Total"]}</p>
+        <p>FedEx: {this.props[`${client}`]["FedEx"]}</p>
+        <p>USPS: {this.props[`${client}`]["USPS"]}</p>
+        <p>UPS: {this.props[`${client}`]["UPS"]}</p>
+      </Collapsible>
+    ))
 
-    //   for (i=0; i<clientsList.length; i++) {
-    //     return (
-    //       <Collapsible trigger={this.props.clientsList[i]}>
-    //         <p>Total: {this.props.clientsList[i]["Total"]}</p>
-    //         <p>FedEx: {this.props.clientsList[i]["FedEx"]}</p>
-    //         <p>USPS: {this.props.clientsList[i]["USPS"]}</p>
-    //         <p>UPS: {this.props.clientsList[i]["UPS"]}</p>
-    //       </Collapsible>
-    //     )
-    //   }
-    // }
+    console.log(clients)
     
     return (
       <div>
-        {/* {clients} */}
+        {clients}
       </div>
     )
   }
@@ -55,8 +47,8 @@ CountOrders.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  ["Revital U"]: state.data.revitalUData,
-  ["Zilis"]: state.data.zilisData,
+  "Revital U": state.data.revitalUData,
+  "Zilis": state.data.zilisData,
   clientsList: state.data.listOfClients
 })
 
