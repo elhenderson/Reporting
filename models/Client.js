@@ -7,8 +7,8 @@ const ClientSchema = new Schema({
     type: String,
     required: false
   },
-  ordersArray: {
-    type: Array
+  ordersObject: {
+    type: Object
   },
   date: {
     type: Date,

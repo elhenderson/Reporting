@@ -19,50 +19,127 @@ router.post('/', (req, res) => {
 
   const ordersArray = JSONvar.orderList.orders
 
-  const clients = ["Zilis", "Revital U"]
+  const clients = {
+    "Revital U": [],
+    "Zilis": []
+  }
 
-  let orders = []
 
   async function countOrders() {
 
+    //allows use of array methods
     const entries = await Object.entries(ordersArray)
 
 
-    const filteredByStoreName = await entries
-    .filter((order, index) => {
-      if (order[1].storeName === "Revital U") {
-        return order[1]
+
+    // test = () => {
+    //   for (var key in clients) {
+    //     console.log(clients[key])
+    //   }
+    // }
+
+    // test();
+
+
+    // console.log(test);
+    sortByStoreName = () => {
+      for (i=0; i<entries.length; i++) {
+        const storeNameVar = entries[i][1].storeName
+        // console.log(clients[storeNameVar]);
+        if (entries[i][1].storeName === storeNameVar) {
+          clients[storeNameVar].push(entries[i][1])
+        }
+      }
+      // console.log(clients["Zilis"])
+    }
+
+    await sortByStoreName();
+
+    // test = () => {
+    //   for (var key in clients) {
+    //     console.log(clients[key])
+    //   }
+    // }
+
+    // test();
+
+    removedDuplicates = () => {
+      for (var key in clients) {
+        clients[key] =
+          clients[key]
+          .reduce((accumulator, order, index, array) => {
+            console.log(order)
+            const { list, hashList } = accumulator;
+            const hash = JSON.stringify(order).replace(/\s/g, '');
+          
+            if (hash && !hashList.includes(hash)) {
+              hashList.push(hash);
+              list.push(order);
+            }
+          
+            if (index + 1 !== array.length) {
+              return accumulator;
+            }  else {
+              return accumulator.list;
+            }
+          }, { list: [], hashList: [] });
+      }
+    }
+
+    await removedDuplicates();
+
+    await console.log(clients["Zilis"].length)
+
+
+    // const filteredByStoreName = await entries
+    // .map(order => {
+    //   // console.log(order[1].storeName)
+    //   const storeNameVar = order[1].storeName
+    //   console.log(clients[storeNameVar])
+    //   if (order[1].storeName === clients[storeNameVar]) {
+    //     console.log("wow")
+    //     return order
+    //   }
+    // })
+
+    //stores all Revital U orders in a variable
+    // const filteredByStoreName = await entries
+    // .filter((order, index) => {
+    //   if (order[1].storeName === "Revital U") {
+    //     return order[1]
         
-      }
-    })
+    //   }
+    // })
 
 
-    const removedDuplicates = await filteredByStoreName
-    .reduce((accumulator, order, index, array) => {
-      const { list, hashList } = accumulator;
-      const hash = JSON.stringify(order[1]).replace(/\s/g, '');
+
+    //removes duplicates
+    // const removedDuplicates = await filteredByStoreName
+    // .reduce((accumulator, order, index, array) => {
+    //   console.log(order)
+    //   const { list, hashList } = accumulator;
+    //   const hash = JSON.stringify(order[1]).replace(/\s/g, '');
     
-      if (hash && !hashList.includes(hash)) {
-        hashList.push(hash);
-        list.push(order[1]);
-      }
+    //   if (hash && !hashList.includes(hash)) {
+    //     hashList.push(hash);
+    //     list.push(order[1]);
+    //   }
     
-      if (index + 1 !== array.length) {
-        return accumulator;
-      }  else {
-        return accumulator.list;
-      }
-    }, { list: [], hashList: [] });
+    //   if (index + 1 !== array.length) {
+    //     return accumulator;
+    //   }  else {
+    //     return accumulator.list;
+    //   }
+    // }, { list: [], hashList: [] });
 
 
-    
-    await orders.push(removedDuplicates);
+    // //pushes all Revital U orders to the array
+    // await orders.push(removedDuplicates);
     
 
     //new server instance would be more accurate?
     const newClient = await new Client({
-      totalCount: orders.length,
-      ordersArray: orders
+      ordersObject: clients
     })
     
   
