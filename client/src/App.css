@@ -1,14 +1,18 @@
 
 
 .Collapsible {
-  background: blue;
+  background: silver;
   width: 50%;
+  height: 25%;
   text-align: center;
   margin: auto;
+  margin-bottom: 5px;
+  border-radius: 5%;
 }
 
 .Collapsible__contentInner {
-  background: red;
+  background: azure;
+  border-radius: 2%;
 }
 
 .Collapsible__trigger {

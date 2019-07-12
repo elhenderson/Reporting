@@ -17,24 +17,34 @@ class CountOrders extends Component {
   render() {
     // console.log(this.props.totalCount)
 
-    // console.log(this.props.revitalUCount)
-    console.log(this.props.clientsList)
+    console.log(this.props.clientData)
+    // const clients = this.props.clientData["Artifacts"]
 
     const clients = this.props.clientsList.map((client, index) => (
       
       <Collapsible trigger={this.props.clientsList[index]} key={client}>
         {/* {console.log(this.props[`${client}`]["Total"])} */}
-        <p>Total: {this.props[`${client}`]["Total"]}</p>
-        <p>FedEx: {this.props[`${client}`]["FedEx"]}</p>
-        <p>USPS: {this.props[`${client}`]["USPS"]}</p>
-        <p>UPS: {this.props[`${client}`]["UPS"]}</p>
+        <p>Total: {this.props.clientData[`${client}`]["Total"]}</p>
+        <p>FedEx: {this.props.clientData[`${client}`]["FedEx"]}</p>
+        <p>USPS: {this.props.clientData[`${client}`]["USPS"]}</p>
+        <p>UPS: {this.props.clientData[`${client}`]["UPS"]}</p>
+        <p>Other: {this.props.clientData[`${client}`]["Other"]}</p>
+        <p>Unfulfilled: {this.props.clientData[`${client}`]["Unfulfilled"]}</p>
       </Collapsible>
     ))
 
-    console.log(clients)
+    // console.log(clients)
     
     return (
       <div>
+        <Collapsible trigger="Totals" >
+          <p>Total: {this.props.totals["All Clients Total"]}</p>
+          <p>FedEx: {this.props.totals["All Clients FedEx"]}</p>
+          <p>USPS: {this.props.totals["All Clients USPS"]}</p>
+          <p>UPS: {this.props.totals["All Clients UPS"]}</p>
+          <p>Other: {this.props.totals["All Clients Other"]}</p>
+          <p>Unfulfilled: {this.props.totals["All Clients Unfulfilled"]}</p>
+        </Collapsible>
         {clients}
       </div>
     )
@@ -46,10 +56,12 @@ CountOrders.propTypes = {
   // clients: PropTypes.array.isRequired
 }
 
+// const 
+
 const mapStateToProps = (state) => ({
-  "Revital U": state.data.revitalUData,
-  "Zilis": state.data.zilisData,
-  clientsList: state.data.listOfClients
+  clientData: state.data.clientData,
+  clientsList: state.data.listOfClients,
+  totals: state.data.totals
 })
 
 const mapDispatchToProps = dispatch => {

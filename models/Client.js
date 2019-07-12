@@ -12,6 +12,9 @@ const ClientSchema = new Schema({
   listOfClients: {
     type: Array
   },
+  ordersTotalCountObject: {
+    type: Object
+  },
   date: {
     type: Date,
     date: Date.now()

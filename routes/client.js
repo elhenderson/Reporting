@@ -13,39 +13,48 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
 
-  const orderList = fs.readFileSync(__dirname + '/Cerulean092018.xml', 'utf-8');
+  const orderList = fs.readFileSync(__dirname + '/1.xml', 'utf-8');
 
   const JSONvar = new Transform(orderList).from("xml").to("json");
 
   const ordersArray = JSONvar.orderList.orders
 
-  const listOfClients = [
-    "Revital U",
-    "Zilis"
-  ]
-
-  const clientOrders = {
-    "Revital U": [],
-    "Zilis": []
-  }
-
-  const clientOrdersCount = {
-    "Revital U": {
-      "Total": 0,
-      "FedEx": 0,
-      "USPS": 0,
-      "UPS": 0
-    },
-    "Zilis": {
-      "Total": 0,
-      "FedEx": 0,
-      "USPS": 0,
-      "UPS": 0
-    }
-  }
-
-
   async function countOrders() {
+
+    const totals = {
+      "All Clients Total": 0,
+      "All Clients FedEx": 0,
+      "All Clients UPS": 0,
+      "All Clients USPS": 0,
+      "All Clients Other": 0,
+      "All Clients Unfulfilled": 0
+    }
+
+    const clientList =  [...new Set( await ordersArray.map(order => order.storeName))]
+
+
+    console.log(clientList);
+  
+  
+    const clientOrders = await clientList.reduce((client, key) => (
+      {...client, [key]: []}
+    ), {})
+  
+    console.log(clientOrders)
+  
+  
+    const clientOrdersByProvider = await clientList.reduce((client, key) => (
+      {...client, [key]: {
+        "Total": 0,
+        "FedEx": 0,
+        "USPS": 0,
+        "UPS": 0,
+        "Other": 0,
+        "Unfulfilled": 0
+      }}
+    ), {})
+  
+    console.log(clientOrdersByProvider)
 
     //allows use of array methods
     const entries = await Object.entries(ordersArray)
@@ -89,16 +98,48 @@ router.post('/', (req, res) => {
         clientOrders[key].map((order) => {
           switch(order.provider) {
             case "FedEx":
-              clientOrdersCount[key]["FedEx"]++
-              clientOrdersCount[key]["Total"]++
+              clientOrdersByProvider[key]["FedEx"]++
+              clientOrdersByProvider[key]["Total"]++
+              totals["All Clients FedEx"]++
+              totals["All Clients Total"]++
               break;
             case "USPS":
-              clientOrdersCount[key]["USPS"]++
-              clientOrdersCount[key]["Total"]++
+              clientOrdersByProvider[key]["USPS"]++
+              clientOrdersByProvider[key]["Total"]++
+              totals["All Clients USPS"]++
+              totals["All Clients Total"]++
               break;
             case "UPS":
-              clientOrdersCount[key]["UPS"]++
-              clientOrdersCount[key]["Total"]++
+              clientOrdersByProvider[key]["UPS"]++
+              clientOrdersByProvider[key]["Total"]++
+              totals["All Clients UPS"]++
+              totals["All Clients Total"]++
+              break;
+            case "Other":
+              if (!order.processedDate) {
+                clientOrdersByProvider[key]["Unfulfilled"]++
+                totals["All Clients Unfulfilled"]++
+                break;
+              } else {
+                clientOrdersByProvider[key]["Other"]++
+                clientOrdersByProvider[key]["Total"]++
+                totals["All Clients Other"]++
+                totals["All Clients Total"]++
+                break;
+              }
+            case "Best Rate":
+              if (!order.processedDate) {
+                clientOrdersByProvider[key]["Unfulfilled"]++
+                totals["All Clients Unfulfilled"]++
+                break;
+              } else {
+                clientOrdersByProvider[key]["Unfulfilled"]++
+                totals["All Clients Unfulfilled"]++
+                break;
+              }
+            default:
+              clientOrdersByProvider[key]["Unfulfilled"]++
+              totals["All Clients Unfulfilled"]++
               break;
           }
         })
@@ -113,8 +154,9 @@ router.post('/', (req, res) => {
     //new server instance would be more accurate?
     const newClient = await new Client({
       ordersObject: clientOrders,
-      ordersCountObject: clientOrdersCount,
-      listOfClients
+      ordersCountObject: clientOrdersByProvider,
+      ordersTotalCountObject: totals,
+      listOfClients: clientList
     })
     
   
