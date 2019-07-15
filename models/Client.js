@@ -3,6 +3,9 @@ const Schema = mongoose.Schema;
 
 //grouped by server instead of client
 const ClientSchema = new Schema({
+  _id: {
+    type: String
+  },
   ordersObject: {
     type: Object
   },
