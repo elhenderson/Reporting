@@ -14,6 +14,7 @@ const OrdersSchema = new Schema({
   processedDate: { type: String, required: false},
   isManual: { type: Boolean, required: false},
   orderDate: { type: Date, required: false},
+  createdAt: {type: Date, default: Date.now, expires: "30d"}
 }, {
   timestamps: true
 })
