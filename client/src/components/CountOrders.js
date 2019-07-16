@@ -19,6 +19,7 @@ class CountOrders extends Component {
 
     console.log(this.props.clientData)
     // const clients = this.props.clientData["Artifacts"]
+    if (!this.props.clientsList) return null
 
     const clients = this.props.clientsList.map((client, index) => (
       

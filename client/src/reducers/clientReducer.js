@@ -11,6 +11,7 @@ export default function(state = initialState, action) {
 
   switch (action.type) {
     case GET_CLIENT_DATA:
+      if (!action.payload || !action.payload.listOfClients) return new Error("Missing payload data")
       const clientData = action.payload.listOfClients.reduce((client, key) => (
         {...client, [key]: action.payload.ordersCountObject[`${key}`]}
       ), {})

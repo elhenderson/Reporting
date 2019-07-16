@@ -100,7 +100,7 @@ const generateReport = async () => {
  
      // new server instance would be more accurate?
      const newClient = new Client({
-       "_id": reportTimeStamp,
+       name: reportTimeStamp,
        ordersObject: clientOrders,
        ordersCountObject: clientOrdersByProvider,
        ordersTotalCountObject: totals,

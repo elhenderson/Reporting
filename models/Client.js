@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 //grouped by server instead of client
 const ClientSchema = new Schema({
-  _id: {
+  name: {
     type: String
   },
   ordersObject: {
@@ -22,6 +22,6 @@ const ClientSchema = new Schema({
     type: Date,
     date: Date.now()
   }
-})
+},{timestamps: true})
 
 module.exports = Client = mongoose.model("Client", ClientSchema);

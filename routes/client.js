@@ -15,6 +15,7 @@ router.get('/', async (req, res) => {
 
   try {
     const report = await Client.find({"createdAt": {"$gte": startOfDay, "$lte": endOfDay}})
+    if (!report || !report.length) throw new Error("Missing report data for the date range")
     res.json(report);
   }
   catch(error) {
