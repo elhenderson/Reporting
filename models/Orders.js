@@ -5,9 +5,9 @@ const Schema = mongoose.Schema;
 //grouped by server instead of client
 const OrdersSchema = new Schema({
   localStatus: { type: String, required: false},
-  orderNumber: { type: String, required: true},
+  orderNumber: { type: String, required: false},
   channelOrderID: { type: String, required: false},
-  storeName: { type: String, required: true},
+  storeName: { type: String, required: false, default: "Other"},
   trackingNumber: { type: String, required: false},
   provider: { type: String, required: false},
   serviceUsed: { type: String, required: false},
