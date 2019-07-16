@@ -2,14 +2,17 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
-
+const reportRunner = require("./modules/generateReport.cron");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 
+reportRunner();
+
 const routes = require("./routes/client.js");
 app.use("/api", routes);
+
 
 
 // Serve static assets
