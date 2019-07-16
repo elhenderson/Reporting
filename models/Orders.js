@@ -7,7 +7,7 @@ const OrdersSchema = new Schema({
   localStatus: { type: String, required: false},
   orderNumber: { type: String, required: false},
   channelOrderID: { type: String, required: false},
-  storeName: { type: String, required: false, default: "Other"},
+  storeName: { type: String, required: true},
   trackingNumber: { type: String, required: false},
   provider: { type: String, required: false},
   serviceUsed: { type: String, required: false},
