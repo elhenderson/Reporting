@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 
-app.use(bodyParser.json({strict: false}));
+app.use(bodyParser.json());
 
 reportRunner();
 
