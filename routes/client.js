@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 router.post('/orders', async (req, res) => {
   try {
     //get order data from request object
-    const orders = req.body;
+    const orders = req;
     console.log(orders)
     if (!orders) throw new Error("missing required orders body")
     //save order data
