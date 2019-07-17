@@ -6,8 +6,8 @@ const reportRunner = require("./modules/generateReport.cron");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(bodyParser.urlencoded())
-app.use(bodyParser.json());
+
+app.use(bodyParser.json({strict: false}));
 
 reportRunner();
 
