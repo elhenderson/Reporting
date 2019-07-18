@@ -1,6 +1,5 @@
 import React from 'react';
 import {Provider} from 'react-redux';
-import Collapsible from 'react-collapsible';
 import './App.css';
 import CountOrders from './components/CountOrders'
 

@@ -2,6 +2,15 @@ body {
   margin-top: 15%;
 }
 
+.react-datepicker-wrapper {
+  display: flex !important;
+  justify-content: center;
+}
+
+.react-datepicker-popper {
+  transform: translate3d(1180px, 405px, 0px) !important;
+}
+
 .Collapsible {
   background: silver;
   width: 25%;

@@ -40,6 +40,7 @@ const generateReport = async () => {
  
      for (var order of orders) {
        const clientName = order.storeName
+       
        clientOrders[clientName][order.orderNumber] = order
        switch(order.provider) {
          case "FedEx":
@@ -95,7 +96,7 @@ const generateReport = async () => {
  
      const timeOfDay = moment().format('H');
  
-     const reportTimeStamp = timeOfDay < 17 ? `${moment().format('MMMM Do YYYY')} startOfDay` : `${moment().format('MMMM Do YYYY')} endOfDay`
+     const reportTimeStamp = timeOfDay < 17 ? `${moment().format('MMMM Do YYYY')} endOfDay` : `${moment().format('MMMM Do YYYY')} endOfDay`
      
  
      // new server instance would be more accurate?

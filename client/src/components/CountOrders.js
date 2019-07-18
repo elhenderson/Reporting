@@ -4,20 +4,33 @@ import {connect} from 'react-redux';
 import {getClientData} from '../actions/clientActions';
 import PropTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 class CountOrders extends Component {
+  state = {
+    startDate: new Date()
+  }
+
 
 
   componentDidMount() {
     this.props.getClientData()
   }
 
+  // handleChange = (date) => {
+  //   this.setState({startDate: date})
+  // }
+
+  // handleSelect = (date) => {
+  //   this.setState({inputValue: date})
+  // }
   
 
   render() {
     // console.log(this.props.totalCount)
 
-    console.log(this.props.clientData)
+
     // const clients = this.props.clientData["Artifacts"]
     if (!this.props.clientsList) return null
 
@@ -38,6 +51,11 @@ class CountOrders extends Component {
     
     return (
       <div>
+        {/* <DatePicker
+          selected={this.state.date}
+          onSelect={this.handleSelect} //when day is clicked
+          onChange={this.handleChange} //only when value has changed
+        /> */}
         <Collapsible trigger="Totals" >
           <p>Total: {this.props.totals["All Clients Total"]}</p>
           <p>FedEx: {this.props.totals["All Clients FedEx"]}</p>

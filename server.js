@@ -7,7 +7,9 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
 
 reportRunner();
 
@@ -27,7 +29,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/endOfDayReport"
 
-mongoose.connect(MONGODB_URI, {useNewUrlParser: true}) 
+mongoose.connect(MONGODB_URI, {useNewUrlParser: true, useCreateIndex: true}) 
 .then(console.log("Connected"))
 .catch(err => console.error(err))
 
