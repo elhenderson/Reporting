@@ -37,7 +37,7 @@ class CountOrders extends Component {
     const clients = this.props.clientsList.map((client, index) => (
       
       <Collapsible trigger={this.props.clientsList[index]} key={client}>
-        {/* {console.log(this.props[`${client}`]["Total"])} */}
+        {console.log(this.props[`${client}`]["Total"])}
         <p>Total: {this.props.clientData[`${client}`]["Total"]}</p>
         <p>FedEx: {this.props.clientData[`${client}`]["FedEx"]}</p>
         <p>USPS: {this.props.clientData[`${client}`]["USPS"]}</p>
@@ -51,11 +51,11 @@ class CountOrders extends Component {
     
     return (
       <div>
-        {/* <DatePicker
+        <DatePicker
           selected={this.state.date}
           onSelect={this.handleSelect} //when day is clicked
           onChange={this.handleChange} //only when value has changed
-        /> */}
+        />
         <Collapsible trigger="Totals" >
           <p>Total: {this.props.totals["All Clients Total"]}</p>
           <p>FedEx: {this.props.totals["All Clients FedEx"]}</p>
