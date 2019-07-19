@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import {connect} from 'react-redux';
-import {getClientData} from '../actions/clientActions';
+import {getClientData, getReportByDate} from '../actions/clientActions';
 import PropTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
 import DatePicker from 'react-datepicker';
@@ -18,13 +17,16 @@ class CountOrders extends Component {
     this.props.getClientData()
   }
 
-  // handleChange = (date) => {
-  //   this.setState({startDate: date})
-  // }
+  handleChange = (date) => {
+    this.setState({startDate: date})
+    const formattedDate = date.toDateString().slice(4).replace(/\s+/g, '-')
+    console.log(formattedDate)
+    this.props.getReportByDate(formattedDate, "endOfDay")
+  }
 
-  // handleSelect = (date) => {
-  //   this.setState({inputValue: date})
-  // }
+  handleSelect = (date) => {
+
+  }
   
 
   render() {
@@ -51,9 +53,10 @@ class CountOrders extends Component {
     return (
       <div>
         <DatePicker
-          selected={this.state.date}
-          onSelect={this.handleSelect} //when day is clicked
+          onSelect={() => this.handleSelect(this.state.startDate)} //when day is clicked
           onChange={this.handleChange} //only when value has changed
+          dateFormat="MMMM dd yyyy"
+          selected = {this.state.startDate}
         />
         <Collapsible trigger="Totals" >
           <p>Total: {this.props.totals["All Clients Total"]}</p>
@@ -71,6 +74,7 @@ class CountOrders extends Component {
 
 CountOrders.propTypes = {
   getClientData: PropTypes.func.isRequired,
+  getReportByDate: PropTypes.func.isRequired
   // clients: PropTypes.array.isRequired
 }
 
@@ -84,7 +88,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    getClientData: () => dispatch(getClientData())
+    getClientData: () => dispatch(getClientData()),
+    getReportByDate: (date, reportType) => dispatch(getReportByDate(date,reportType))
   }
 }
 

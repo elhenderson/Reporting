@@ -1,4 +1,4 @@
-import {POST_CLIENT_DATA, GET_CLIENT_DATA} from '../actions/actionTypes';
+import {GET_REPORT_BY_DATE, GET_CLIENT_DATA, NO_REPORT} from '../actions/actionTypes';
 
 
 
@@ -8,24 +8,37 @@ const initialState = {
 }
 
 export default function(state = initialState, action) {
-
+  if (!action.payload || !action.payload.listOfClients) return new Error("Missing payload data")
+  const clientData = action.payload.listOfClients.reduce((client, key) => (
+    {...client, [key]: action.payload.ordersCountObject[`${key}`]}
+  ), {})
   switch (action.type) {
+    
     case GET_CLIENT_DATA:
-      if (!action.payload || !action.payload.listOfClients) return new Error("Missing payload data")
-      const clientData = action.payload.listOfClients.reduce((client, key) => (
-        {...client, [key]: action.payload.ordersCountObject[`${key}`]}
-      ), {})
-      console.log(clientData)
+      // if (!action.payload || !action.payload.listOfClients) return new Error("Missing payload data")
+      // const clientData = action.payload.listOfClients.reduce((client, key) => (
+      //   {...client, [key]: action.payload.ordersCountObject[`${key}`]}
+      // ), {})
       return {
         ...state,
         clientData,
         listOfClients: action.payload.listOfClients,
         totals: action.payload.ordersTotalCountObject
       };
-    case POST_CLIENT_DATA:
+    case GET_REPORT_BY_DATE:
+      // if (!action.payload || !action.payload.listOfClients) return new Error("Missing payload data")
+      // const clientData = action.payload.listOfClients.reduce((client, key) => (
+      //   {...client, [key]: action.payload.ordersCountObject[`${key}`]}
+      // ), {})
       return {
         ...state,
-        clientData: [action.payload, ...state.clients]
+        clientData,
+        listOfClients: action.payload.listOfClients,
+        totals: action.payload.ordersTotalCountObject
+      };
+    case NO_REPORT:
+      return {
+        ...state
       }
     default:
       return state;
