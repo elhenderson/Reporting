@@ -34,7 +34,7 @@ router.post('/orders', async (req, res) => {
     // console.log(orders)
     if (!orders) throw new Error("missing required orders body")
     //save order data
-    const savedOrders = await Orders.create(orders)
+    const savedOrders = await Orders.insertMany(orders)
     res.json(savedOrders);
   } catch (error) {
     res.json(error.message)
