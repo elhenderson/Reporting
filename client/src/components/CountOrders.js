@@ -37,7 +37,6 @@ class CountOrders extends Component {
     const clients = this.props.clientsList.map((client, index) => (
       
       <Collapsible trigger={this.props.clientsList[index]} key={client}>
-        {console.log(this.props[`${client}`]["Total"])}
         <p>Total: {this.props.clientData[`${client}`]["Total"]}</p>
         <p>FedEx: {this.props.clientData[`${client}`]["FedEx"]}</p>
         <p>USPS: {this.props.clientData[`${client}`]["USPS"]}</p>
@@ -47,7 +46,7 @@ class CountOrders extends Component {
       </Collapsible>
     ))
 
-    // console.log(clients)
+    
     
     return (
       <div>
