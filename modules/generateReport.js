@@ -49,24 +49,24 @@ const generateReport = async () => {
             clientOrdersByProvider[clientName]["Total"]++
             totals["All Clients FedEx"]++
             totals["All Clients Total"]++
-           }
            break;
+           }
          case "USPS":
            if (order.processedDate) {
             clientOrdersByProvider[clientName]["USPS"]++
             clientOrdersByProvider[clientName]["Total"]++
             totals["All Clients USPS"]++
             totals["All Clients Total"]++              
-           }
            break;
+           }
          case "UPS":
            if (order.processedDate) {
             clientOrdersByProvider[clientName]["UPS"]++
             clientOrdersByProvider[clientName]["Total"]++
             totals["All Clients UPS"]++
             totals["All Clients Total"]++
-           }
            break;
+           }
          case "Other":
            if (!order.processedDate) {
              clientOrdersByProvider[clientName]["Unfulfilled"]++
