@@ -10,6 +10,12 @@ const generateReport = async () => {
  
    try {
      const orders = await Orders.find({"createdAt": {"$gte": startOfDay, "$lte": endOfDay}})
+
+     const uniqueOrders = await Array.from(new Set(orders.map(order => order.orderNumber)))
+      .map(orderNumber => {
+        return orders.find(order => order.orderNumber === orderNumber)
+      })
+
  
      if (!orders || !orders.length) throw new Error("No orders were found")
  
@@ -26,7 +32,7 @@ const generateReport = async () => {
  
      const clientOrders = {}
  
-     for (const order of orders) {
+     for (const order of uniqueOrders) {
        clientOrdersByProvider[order.storeName] = {        
        "Total": 0,
        "FedEx": 0,
@@ -38,7 +44,7 @@ const generateReport = async () => {
        clientOrders[order.storeName] = {}
      }
  
-     for (var order of orders) {
+     for (var order of uniqueOrders) {
        const clientName = order.storeName
        
        clientOrders[clientName][order.orderNumber] = order
