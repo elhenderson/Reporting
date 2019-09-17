@@ -1,44 +1,76 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import {connect} from 'react-redux';
 import {getClientData} from '../../actions/clientActions';
 import PropTypes from 'prop-types';
-import Collapsible from 'react-collapsible';
-import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import {VictoryBar, VictoryAxis, VictoryChart} from 'victory';
 
-class Report extends Component {
-  state = {
-    startDate: new Date()
-  }
+const Report = props => {
 
 
+  // componentDidMount() {
+  //   this.props.getClientData()
+  // }
+  useEffect(() => {
+    props.getClientData()
+  })
 
-  componentDidMount() {
-    this.props.getClientData()
-  }
-  
+    if (!props.clientsList) return null
 
-  render() {
- 
-    if (!this.props.clientsList) return null
-
-    const clients = this.props.clientsList.map((client, index) => (
+    const clients = props.clientsList.map((client, index) => {
       
-      <Collapsible trigger={this.props.clientsList[index]} key={client}>
-        <p>Total: {this.props.clientData[`${client}`]["Total"]}</p>
-        <p>FedEx: {this.props.clientData[`${client}`]["FedEx"]}</p>
-        <p>USPS: {this.props.clientData[`${client}`]["USPS"]}</p>
-        <p>UPS: {this.props.clientData[`${client}`]["UPS"]}</p>
-        <p>Other: {this.props.clientData[`${client}`]["Other"]}</p>
-        <p>Unfulfilled: {this.props.clientData[`${client}`]["Unfulfilled"]}</p>
-      </Collapsible>
-    ))
+      // <Collapsible trigger={this.props.clientsList[index]} key={client}>
+      //   <p>Total: {this.props.clientData[`${client}`]["Total"]}</p>
+      //   <p>FedEx: {this.props.clientData[`${client}`]["FedEx"]}</p>
+      //   <p>USPS: {this.props.clientData[`${client}`]["USPS"]}</p>
+      //   <p>UPS: {this.props.clientData[`${client}`]["UPS"]}</p>
+      //   <p>Other: {this.props.clientData[`${client}`]["Other"]}</p>
+      //   <p>Unfulfilled: {this.props.clientData[`${client}`]["Unfulfilled"]}</p>
+      // </Collapsible>
+      const data = [
+        {quarter: 1, earnings: props.clientData[`${client}`]["Total"]},
+        {quarter: 2, earnings: props.clientData[`${client}`]["FedEx"]},
+        {quarter: 3, earnings: props.clientData[`${client}`]["USPS"]},
+        {quarter: 4, earnings: props.clientData[`${client}`]["UPS"]},
+        {quarter: 5, earnings: props.clientData[`${client}`]["Unfulfilled"]}
+      ];
+      return (
+        <div style={{width: "500px", height: "500px"}} key={props.clientsList[index]}>
+          <h2 style={{textAlign:"center"}}>{props.clientsList[index]}</h2>
+          <VictoryChart domainPadding={10}>
+            <VictoryAxis
+              tickValues={["Total", "FedEx", "USPS", "UPS", "Unfulfilled"]}
+            />
+            <VictoryAxis
+              dependentAxis
+              // tickFormat={(x) => (`$${x / 1000}k`)}
+            />
+            <VictoryBar
+              data={data}
+              x={"quarter"}
+              y={"earnings"}
+            />
+          </VictoryChart>
+        </div>
 
-    
+      )
+
+      
+
+      
+    })
+
+    const totalData = [
+      {quarter: 1, earnings: props.totals["All Clients Total"]},
+      {quarter: 2, earnings: props.totals["All Clients FedEx"]},
+      {quarter: 3, earnings: props.totals["All Clients USPS"]},
+      {quarter: 4, earnings: props.totals["All Clients UPS"]},
+      {quarter: 5, earnings: props.totals["All Clients Unfulfilled"]}
+    ];
     
     return (
       <div>
-        <DatePicker
+        {/* <DatePicker
           onSelect={() => this.handleSelect(this.state.startDate)} //when day is clicked
           onChange={this.handleChange} //only when value has changed
           dateFormat="MMMM dd yyyy"
@@ -51,11 +83,32 @@ class Report extends Component {
           <p>UPS: {this.props.totals["All Clients UPS"]}</p>
           <p>Other: {this.props.totals["All Clients Other"]}</p>
           <p>Unfulfilled: {this.props.totals["All Clients Unfulfilled"]}</p>
-        </Collapsible>
-        {clients}
+        </Collapsible> */}
+        <div style={{display: "flex", justifyContent: "center"}}>
+          <div style={{width: "500px", height: "500px"}}>
+            <h2 style={{textAlign:"center"}}>Total</h2>
+            <VictoryChart domainPadding={10}>
+              <VictoryAxis
+                tickValues={["Total", "FedEx", "USPS", "UPS", "Unfulfilled"]}
+              />
+              <VictoryAxis
+                dependentAxis
+                // tickFormat={(x) => (`$${x / 1000}k`)}
+              />
+              <VictoryBar
+                data={totalData}
+                x={"quarter"}
+                y={"earnings"}
+              />
+            </VictoryChart>
+          </div>
+        </div>
+        
+        <div style={{display: "flex", justifyContent: "center"}}>
+          {clients}
+        </div>
       </div>
     )
-  }
 }
 
 Report.propTypes = {
