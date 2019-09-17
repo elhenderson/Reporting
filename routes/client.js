@@ -14,8 +14,7 @@ router.get('/', async (req, res) => {
   //.subtract(1, "day")
 
   try {
-    const report = await Client.find({"createdAt": {"$gte": startOfDay, "$lte": endOfDay}})
-    if (!report || !report.length) throw new Error("Missing report data for the date range")
+    const report = await Client.find()
     res.json(report);
   }
   catch(error) {
@@ -23,16 +22,16 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.get('/chooseReport/:date/:reportType', async (req, res) => {
-  try {
-    const report = await Client.find({name: `${req.params.date}_${req.params.reportType}`})
-    if (!report || !report.length) throw new Error("Missing report data for the date range")
-    res.json(report);
-  }
-  catch(error) {
-    res.json(error.message)
-  }
-})
+// router.get('/chooseReport/:date/:reportType', async (req, res) => {
+//   try {
+//     const report = await Client.find({name: `${req.params.date}_${req.params.reportType}`})
+//     if (!report || !report.length) throw new Error("Missing report data for the date range")
+//     res.json(report);
+//   }
+//   catch(error) {
+//     res.json(error.message)
+//   }
+// })
 
 //shipworks endpoint
 //Handles all order data from individual servers by processing, conforming to required schema
