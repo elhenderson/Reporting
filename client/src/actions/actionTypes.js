@@ -1,3 +1,1 @@
-export const GET_REPORT_BY_DATE = "GET_REPORT_BY_DATE";
 export const GET_CLIENT_DATA = "GET_CLIENT_DATA";
-export const NO_REPORT = "NO_REPORT";

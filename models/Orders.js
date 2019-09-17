@@ -4,15 +4,10 @@ const Schema = mongoose.Schema;
 
 //grouped by server instead of client
 const OrdersSchema = new Schema({
-  localStatus: { type: String, required: false},
   orderNumber: { type: String, required: false},
-  channelOrderID: { type: String, required: false},
-  storeName: { type: String, required: true},
-  trackingNumber: { type: String, required: false},
+  company: { type: String, required: true},
   provider: { type: String, required: false},
-  serviceUsed: { type: String, required: false},
   processedDate: { type: String, required: false},
-  isManual: { type: Boolean, required: false},
   orderDate: { type: Date, required: false},
   createdAt: {type: Date, default: Date.now, expires: "23h"}
 }, {

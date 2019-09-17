@@ -1,5 +1,5 @@
 {
-  "name": "end-of-day-report",
+  "name": "report",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

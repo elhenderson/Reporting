@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {connect} from 'react-redux';
-import {getClientData, getReportByDate} from '../../actions/clientActions';
+import {getClientData} from '../../actions/clientActions';
 import PropTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
 import DatePicker from 'react-datepicker';
@@ -15,17 +15,6 @@ class Report extends Component {
 
   componentDidMount() {
     this.props.getClientData()
-  }
-
-  handleChange = (date) => {
-    this.setState({startDate: date})
-    const formattedDate = date.toDateString().slice(4).replace(/\s+/g, '-')
-    console.log(formattedDate)
-    this.props.getReportByDate(formattedDate, "endOfDay")
-  }
-
-  handleSelect = (date) => {
-
   }
   
 
@@ -70,8 +59,7 @@ class Report extends Component {
 }
 
 Report.propTypes = {
-  getClientData: PropTypes.func.isRequired,
-  getReportByDate: PropTypes.func.isRequired
+  getClientData: PropTypes.func.isRequired
 }
 
 
@@ -83,8 +71,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    getClientData: () => dispatch(getClientData()),
-    getReportByDate: (date, reportType) => dispatch(getReportByDate(date,reportType))
+    getClientData: () => dispatch(getClientData())
   }
 }
 

@@ -1,5 +1,5 @@
 {
-  "name": "end-of-day-report",
+  "name": "reporting",
   "version": "1.0.0",
   "description": "npm init   express   body-parser   mongoose   concurrently scripts   start: node server.js   server: nodemon server.js server.js   express, mongoose, bodyParse   initialize express   bodyParser middleware for json   mongoose connect for localhost     add promises for success and failure of connection   define PORT & app.listen",
   "main": "server.js",

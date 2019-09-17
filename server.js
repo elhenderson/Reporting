@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/endOfDayReport"
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/Report"
 
 mongoose.connect(MONGODB_URI, {useNewUrlParser: true, useCreateIndex: true}) 
 .then(console.log("Connected"))
