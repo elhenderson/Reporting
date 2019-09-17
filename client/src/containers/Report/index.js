@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import {connect} from 'react-redux';
-import {getClientData, getReportByDate} from '../actions/clientActions';
+import {getClientData, getReportByDate} from '../../actions/clientActions';
 import PropTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
-class CountOrders extends Component {
+class Report extends Component {
   state = {
     startDate: new Date()
   }
@@ -30,10 +30,7 @@ class CountOrders extends Component {
   
 
   render() {
-    // console.log(this.props.totalCount)
-
-
-    // const clients = this.props.clientData["Artifacts"]
+ 
     if (!this.props.clientsList) return null
 
     const clients = this.props.clientsList.map((client, index) => (
@@ -72,13 +69,11 @@ class CountOrders extends Component {
   }
 }
 
-CountOrders.propTypes = {
+Report.propTypes = {
   getClientData: PropTypes.func.isRequired,
   getReportByDate: PropTypes.func.isRequired
-  // clients: PropTypes.array.isRequired
 }
 
-// const 
 
 const mapStateToProps = (state) => ({
   clientData: state.data.clientData,
@@ -93,4 +88,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CountOrders);
+export default connect(mapStateToProps, mapDispatchToProps)(Report);
