@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {getClientData} from '../../actions/clientActions';
 import PropTypes from 'prop-types';
 import "react-datepicker/dist/react-datepicker.css";
-import {VictoryBar, VictoryAxis, VictoryChart} from 'victory';
+import {VictoryBar, VictoryAxis, VictoryChart, VictoryTheme} from 'victory';
 
 const Report = props => {
 
@@ -34,23 +34,34 @@ const Report = props => {
         {quarter: 4, earnings: props.clientData[`${client}`]["UPS"]},
         {quarter: 5, earnings: props.clientData[`${client}`]["Unfulfilled"]}
       ];
+      let color = "";
+
+      if (props.clientsList[index] === "Lowes") {
+        color = "midnightBlue"
+      } else if (props.clientsList[index] === "Walmart") {
+        color = "#f47321"	
+      } else if (props.clientsList[index] === "Amazon") {
+        color = "#ff9900"
+      }
       return (
         <div style={{width: "500px", height: "500px"}} key={props.clientsList[index]}>
-          <h2 style={{textAlign:"center"}}>{props.clientsList[index]}</h2>
-          <VictoryChart domainPadding={10}>
-            <VictoryAxis
-              tickValues={["Total", "FedEx", "USPS", "UPS", "Unfulfilled"]}
-            />
-            <VictoryAxis
-              dependentAxis
-              // tickFormat={(x) => (`$${x / 1000}k`)}
-            />
-            <VictoryBar
-              data={data}
-              x={"quarter"}
-              y={"earnings"}
-            />
-          </VictoryChart>
+            <h2 style={{textAlign:"center"}}>{props.clientsList[index]}</h2>
+            <VictoryChart domainPadding={10}>
+              <VictoryAxis
+                tickValues={["Total", "FedEx", "USPS", "UPS", "Unfulfilled"]}
+              />
+              <VictoryAxis
+                dependentAxis
+                // tickFormat={(x) => (`$${x / 1000}k`)}
+              />
+              <VictoryBar
+              style={{ data: { fill: color } }}
+                data={data}
+                x={"quarter"}
+                y={"earnings"}
+              />
+            </VictoryChart>
+
         </div>
 
       )
@@ -70,6 +81,7 @@ const Report = props => {
     
     return (
       <div>
+        <h1 style={{textAlign: "center", marginTop: "-150px"}}>Analytics App</h1>
         {/* <DatePicker
           onSelect={() => this.handleSelect(this.state.startDate)} //when day is clicked
           onChange={this.handleChange} //only when value has changed
@@ -96,6 +108,7 @@ const Report = props => {
                 // tickFormat={(x) => (`$${x / 1000}k`)}
               />
               <VictoryBar
+                style={{ data: { fill: "#6DB65B" } }}
                 data={totalData}
                 x={"quarter"}
                 y={"earnings"}
