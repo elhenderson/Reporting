@@ -1,11 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {connect} from 'react-redux';
-import {getClientData} from '../../actions/clientActions';
+import {getClientData, postClientData} from '../../actions/clientActions';
 import PropTypes from 'prop-types';
 import "react-datepicker/dist/react-datepicker.css";
 import {VictoryBar, VictoryAxis, VictoryChart, VictoryTheme} from 'victory';
 
 const Report = props => {
+  const [orderNumber, setOrderNumber] = useState("");
+  const [company, setCompany] = useState("Lowes");
+  const [carrier, setCarrier] = useState("USPS");
+  const [processed, setProcessed] = useState(false);
 
 
   // componentDidMount() {
@@ -78,10 +82,48 @@ const Report = props => {
       {quarter: 4, earnings: props.totals["All Clients UPS"]},
       {quarter: 5, earnings: props.totals["All Clients Unfulfilled"]}
     ];
+
+    const handleSubmit = (event) => {
+      event.preventDefault()
+      const data = {
+        orderNumber,
+        company,
+        provider: carrier,
+        processedDate: processed ? "2019-07-19T15:14:43.123Z" : ""
+      }
+      props.postClientData(data)
+      window.location.reload()
+    }
     
     return (
       <div>
         <h1 style={{textAlign: "center", marginTop: "-150px"}}>Analytics App</h1>
+        <div style={{textAlign: "center"}}>
+          <h3>Add an order</h3>
+          <form onSubmit={handleSubmit}>
+            Order Number
+            <input type="text" name="orderNumber" value={orderNumber} onChange={e => setOrderNumber(e.target.value)}/>
+            <br/>
+            Company
+            <select value={company} onChange={e => setCompany(e.target.value)}>
+              <option value="Lowes">Lowes</option>
+              <option value="Walmart">Walmart</option>
+              <option value="Amazon">Amazon</option>
+            </select>
+            <br/>
+            Carrier
+            <select name="carrier" value={carrier} onChange={e => setCarrier(e.target.value)}>
+              <option value="USPS">USPS</option>
+              <option value="FedEx">FedEx</option>
+              <option value="UPS">UPS</option>
+            </select>
+            <br />
+            Processed? <input type="checkbox" name="processed" value={processed} onChange={e => setProcessed(!processed)}/>
+            <br />
+            <button type="submit" >Submit</button>
+          </form>
+        </div>
+        
         {/* <DatePicker
           onSelect={() => this.handleSelect(this.state.startDate)} //when day is clicked
           onChange={this.handleChange} //only when value has changed
@@ -137,7 +179,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    getClientData: () => dispatch(getClientData())
+    getClientData: () => dispatch(getClientData()),
+    postClientData: (formData) => dispatch(postClientData(formData))
   }
 }
 

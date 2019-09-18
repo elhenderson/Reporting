@@ -13,3 +13,7 @@ export const getClientData = () => dispatch => {
   )
 }
 
+export const postClientData = (data) => dispatch => {
+  axios
+  .post('/api/orders', data)
+}

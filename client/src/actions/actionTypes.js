@@ -1,1 +1,2 @@
 export const GET_CLIENT_DATA = "GET_CLIENT_DATA";
+export const POST_CLIENT_DATA = "POST_CLIENT_DATA";
