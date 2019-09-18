@@ -7,7 +7,7 @@ const fs = require("fs");
 const generateReport =  require("../modules/generateReport")
 
 router.get('/', async (req, res) => {
-  generateReport();
+  // generateReport();
   try {
     const report = await Client.find()
     res.json(report);
