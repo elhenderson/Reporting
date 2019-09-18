@@ -13,7 +13,7 @@ const Report = props => {
   // }
   useEffect(() => {
     props.getClientData()
-  })
+  }, [])
 
     if (!props.clientsList) return null
 
