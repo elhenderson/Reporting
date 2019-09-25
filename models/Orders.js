@@ -9,7 +9,7 @@ const OrdersSchema = new Schema({
   provider: { type: String, required: false},
   processedDate: { type: String, required: false},
   orderDate: { type: Date, required: false},
-  createdAt: {type: Date, default: Date.now, expires: "23h"}
+  createdAt: {type: Date, default: Date.now}
 }, {
   timestamps: true
 })
